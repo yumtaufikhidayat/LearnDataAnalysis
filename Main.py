@@ -123,7 +123,7 @@ sales_df = pd.read_csv("https://raw.githubusercontent.com/dicodingacademy/dicodi
 # print(customers_df.describe())
 # print()
 
-## 2. Cleaning Data orders_cf
+## 2. Cleaning Data orders_df
 ### Change wrong data type of order_date & delivery_date
 # datetime_columns = ["order_date", "delivery_date"]
 # for column in datetime_columns:
@@ -132,9 +132,19 @@ sales_df = pd.read_csv("https://raw.githubusercontent.com/dicodingacademy/dicodi
 # print(orders_df.info())
 # print()
 
-## 3. Cleaning Data product_cf
+## 3. Cleaning Data product_df
 ### Remove duplicate data
-print(product_df.drop_duplicates(inplace=True))
-print()
-print("Sum of duplicate data: ", product_df.duplicated().sum())
-print()
+# print(product_df.drop_duplicates(inplace=True))
+# print()
+# print("Sum of duplicate data: ", product_df.duplicated().sum())
+# print()
+
+## 4. Cleaning Data sales_df
+## Show data row that contains missing values
+# print(sales_df[sales_df.total_price.isna()])
+# print()
+
+## Calculate total price
+# sales_df["total_price"] = sales_df["price_per_unit"] * sales_df["quantity"]
+# print(sales_df.isna().sum())
+# print()
