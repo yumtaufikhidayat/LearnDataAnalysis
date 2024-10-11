@@ -125,9 +125,16 @@ sales_df = pd.read_csv("https://raw.githubusercontent.com/dicodingacademy/dicodi
 
 ## 2. Cleaning Data orders_cf
 ### Change wrong data type of order_date & delivery_date
-datetime_columns = ["order_date", "delivery_date"]
-for column in datetime_columns:
-    orders_df[column] = pd.to_datetime(orders_df[column])
+# datetime_columns = ["order_date", "delivery_date"]
+# for column in datetime_columns:
+#     orders_df[column] = pd.to_datetime(orders_df[column])
 
-print(orders_df.info())
-print("")
+# print(orders_df.info())
+# print()
+
+## 3. Cleaning Data product_cf
+### Remove duplicate data
+print(product_df.drop_duplicates(inplace=True))
+print()
+print("Sum of duplicate data: ", product_df.duplicated().sum())
+print()
