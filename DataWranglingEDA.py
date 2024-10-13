@@ -314,5 +314,4 @@ print(all_df.groupby(by=["age_group", "product_type"]).agg({
     "total_price": "sum"
 }))
 print()
-
 ##### ---- End of Explanatory Data Analysis ---- #####
