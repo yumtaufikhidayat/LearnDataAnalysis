@@ -144,7 +144,7 @@ print()
 print(sales_df[sales_df.total_price.isna()])
 print()
 
-## Calculate total price
+## 5. Calculate total price
 sales_df["total_price"] = sales_df["price_per_unit"] * sales_df["quantity"]
 print(sales_df.isna().sum())
 print()
