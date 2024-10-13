@@ -170,4 +170,149 @@ print()
 print(customers_df.groupby(by="state").customer_id.nunique().sort_values(ascending=False))
 print()
 
+# 2. Exploration Data orders_df
+## 1. Create a column delivery_time by counting difference of delivery date and order date
+delivery_time = orders_df["delivery_date"] - orders_df["order_date"]
+
+## 2. Use apply() to convert of total time in seconds as delivery time
+delivery_time = delivery_time.apply(lambda x: x.total_seconds())
+
+## 3. Then convert total delivery time by divide into 86400 (total seconds in day)
+orders_df["delivery_time"] = round(delivery_time/86400)
+print(orders_df)
+print()
+
+## 4. Get all information about orders_df
+print(orders_df.describe(include="all"))
+print()
+
+# 3. Exploratory Data orders_df and customers_df
+## 1. Create a new column called "status". The "status" will be "Active" and "Non Active"
+# Filter status of customers, "Active" means customer have bought at least one. If none then status is "Non Active"
+customer_id_in_orders_df = orders_df.customer_id.tolist()
+customers_df["status"] = customers_df["customer_id"].apply(lambda x: "Active" if x in customer_id_in_orders_df else "Non Active")
+print(customers_df.sample(5))
+print()
+
+## 2. Get all customers which status either "Active" or "Non Active"
+print(customers_df.groupby(by="status").customer_id.count())
+print()
+
+## 3. Merge/join of orders_df and customers_df
+orders_customers_df = pd.merge(
+    left=orders_df,
+    right=customers_df,
+    how="left",
+    left_on="customer_id",
+    right_on="customer_id"
+)
+print(orders_customers_df.head())
+print()
+
+## 4. Sort order count by city
+print(orders_customers_df.groupby(by="city").order_id.nunique().sort_values(ascending=False).reset_index().head(10))
+print()
+
+## 5. Sort order count by state
+print(orders_customers_df.groupby(by="state").order_id.nunique().sort_values(ascending=False))
+print()
+
+## 6. Sort order count by gender
+print(orders_customers_df.groupby(by="gender").order_id.nunique().sort_values(ascending=False))
+print()
+
+## 7. Sort order count by age group
+orders_customers_df["age_group"] = orders_customers_df.age.apply(lambda x: "Youth" if x <= 24 else ("Seniors" if x > 64 else "Adults"))
+print(orders_customers_df.groupby(by="age_group").order_id.nunique().sort_values(ascending=False))
+print()
+
+# 4. Exploratory Data product_df and sales_df
+## 1. Get all information for both product_df and sales_df
+print(product_df.describe(include="all"))
+print()
+print(sales_df.describe(include="all"))
+print()
+
+## 2. Sort product by price to get information of cheaper and expensive product
+print(product_df.sort_values(by="price", ascending=False))
+print()
+
+## 3. Gather information by product_type
+print(product_df.groupby(by="product_type").agg({
+    "product_id": "nunique",
+    "quantity": "sum",
+    "price": ["min", "max"]
+}))
+print()
+
+## 4. Gather information by product_name
+print(product_df.groupby(by="product_name").agg({
+    "product_id": "nunique",
+    "quantity": "sum",
+    "price": ["min", "max"]
+}))
+print()
+
+## 5. Gather the bestseller product
+sales_product_df = pd.merge(
+    left=sales_df,
+    right=product_df,
+    how="left",
+    left_on="product_id",
+    right_on="product_id"
+)
+print(sales_product_df.head())
+print()
+
+## 6. Gather information by product_type
+## Goals: to know the bestseller product that contribute with company revenue
+print(sales_product_df.groupby(by="product_type").agg({
+    "sales_id": "nunique",
+    "quantity_x": "sum",
+    "total_price": "sum"
+}))
+print()
+
+## 7. Gather information by product_name then sort by total_price
+## Goals: to know the bestseller product that contribute with company revenue
+print(sales_product_df.groupby(by="product_name").agg({
+    "sales_id": "nunique",
+    "quantity_x": "sum",
+    "total_price": "sum"
+}).sort_values(by="total_price", ascending=False))
+print()
+
+# 5. Exploratory Data all_df
+## 1. Create a new dataframe called "all_df" to store all information four tables (customers_df, orders_df, sales_df, and product_df)
+all_df = pd.merge(
+    left=sales_product_df,
+    right=orders_customers_df,
+    how="left",
+    left_on="order_id",
+    right_on="order_id"
+)
+print(all_df.head())
+print()
+
+## 2. Get information of customer order preference by customer's state and customer's product type
+print(all_df.groupby(by=["state", "product_type"]).agg({
+    "quantity_x": "sum",
+    "total_price": "sum"
+}))
+print()
+
+## 3. Get information of customer order preference by customer's gender and customer's product type
+print(all_df.groupby(by=["gender", "product_type"]).agg({
+    "quantity_x": "sum",
+    "total_price": "sum"
+}))
+print()
+
+## 4. Get information of customer order preference by customer's age group and customer's product type
+print(all_df.groupby(by=["age_group", "product_type"]).agg({
+    "quantity_x": "sum",
+    "total_price": "sum"
+}))
+print()
+
 ##### ---- End of Explanatory Data Analysis ---- #####
