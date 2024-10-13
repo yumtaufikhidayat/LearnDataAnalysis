@@ -152,18 +152,19 @@ print()
 ##### ---- End of Gathering Data ---- #####
 
 ##### ---- Explanatory Data Analysis ---- #####
-# 1. Show all dataframe info
+# 1. Exploration Data customers_df
+## 1. Show all dataframe info
 print(customers_df.describe(include="all"))
 print()
 
-# 2. Show customer demographics by gender
+## 2. Show customer demographics by gender
 print(customers_df.groupby(by="gender").agg({
     "customer_id": "nunique",
     "age": ["max", "min", "mean", "std"]
 }))
 print()
 
-# 3. Show customer demographics by city and state, sort by descending
+## 3. Show customer demographics by city and state, sort by descending
 print(customers_df.groupby(by="city").customer_id.nunique().sort_values(ascending=False))
 print()
 print(customers_df.groupby(by="state").customer_id.nunique().sort_values(ascending=False))
