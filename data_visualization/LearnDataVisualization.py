@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+import numpy as np
 
 cities = ('Bogor', 'Bandung', 'Jakarta', 'Semarang', 'Yogyakarta',
           'Surakarta', 'Surabaya', 'Medan', 'Makassar')
@@ -9,7 +10,7 @@ populations = (45076704, 11626410, 212162757, 19109629, 50819826, 17579085,
                3481, 287750, 785409)
 
 # 1. Bar Chart
-# 1. Show bar chart by using matplotlib
+## 1. Show bar chart by using matplotlib
 plt.bar(x=cities, height=populations)
 print(plt.show())
 
@@ -70,4 +71,20 @@ plt.pie(
     colors=colors,
     wedgeprops = {'width': 0.4}
 )
+print(plt.show())
+
+# 3. Histogram
+## 1. Show histogram using numpy
+### Show random data but as normal distribution
+x = np.random.normal(15, 5, 250)
+plt.hist(x=x, bins=15)
+print(plt.show())
+
+## 2. Show histogram using seaborn
+### Use histplot() to show readable histogram
+sns.histplot(x=x, bins=15)
+print(plt.show())
+
+### Identify the distribution from qualitative data
+sns.histplot(x=x, bins=15, kde=True)
 print(plt.show())
