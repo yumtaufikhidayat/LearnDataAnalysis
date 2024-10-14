@@ -88,3 +88,8 @@ print(plt.show())
 ### Identify the distribution from qualitative data
 sns.histplot(x=x, bins=15, kde=True)
 print(plt.show())
+
+# 4. Box Plot
+x = np.random.normal(15, 5, 250)
+sns.boxplot(x)
+plt.show()
