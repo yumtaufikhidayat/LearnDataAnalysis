@@ -64,7 +64,7 @@ plt.pie(
 )
 print(plt.show())
 
-## 2. Use wedgedrops() to show a hole in center like a donut
+### Use wedgedrops() to show a hole in center like a donut
 plt.pie(
     x=votes,
     labels=flavors,
