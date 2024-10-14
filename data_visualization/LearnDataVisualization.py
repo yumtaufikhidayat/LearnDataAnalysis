@@ -9,7 +9,7 @@ populations = (45076704, 11626410, 212162757, 19109629, 50819826, 17579085,
                3481, 287750, 785409)
 
 # 1. Bar Chart
-## 1. Show bar chart by using matplotlib
+# 1. Show bar chart by using matplotlib
 plt.bar(x=cities, height=populations)
 print(plt.show())
 
@@ -38,7 +38,7 @@ print(plt.show())
 plt.barh(y=df["Cities"], width=df["Population"])
 plt.xlabel("Population (Millions)")
 plt.title("Population of Cities in Indonesia")
-plt.show()
+print(plt.show())
 
 ## 3. Show bar chart using seaborn
 ### Show bar chart using seaborn
@@ -47,4 +47,27 @@ plt.xlabel("Population (Millions)")
 plt.title("Population of Cities in Indonesia")
 print(plt.show())
 
+# 2. Pie Chart
+## 1. Show bar chart using matplotlib
+flavors = ('Chocolate', 'Vanilla', 'Macha', 'Others')
+votes = (50, 20, 30, 10)
+colors = ('#8B4513', '#FFF8DC', '#93C572', '#E67F0D')
+explode = (0.1, 0, 0, 0)
 
+plt.pie(
+    x=votes,
+    labels=flavors,
+    autopct='%1.1f%%',
+    colors=colors,
+    explode=explode
+)
+print(plt.show())
+
+## 2. Use wedgedrops() to show a hole in center like a donut
+plt.pie(
+    x=votes,
+    labels=flavors,
+    colors=colors,
+    wedgeprops = {'width': 0.4}
+)
+print(plt.show())
