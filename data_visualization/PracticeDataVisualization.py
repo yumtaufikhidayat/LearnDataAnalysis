@@ -1,6 +1,5 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
 import seaborn as sns
 
 display_max_column = pd.set_option('display.max_columns', None)  # Show all columns
